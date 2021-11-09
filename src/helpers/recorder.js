@@ -17,6 +17,7 @@ const RTSPRecorder = class {
     this.config = config
     this.name = config.name
     this.url = config.url
+    this.ffmpegRunner = config.this.ffmpegRunner
     this.timeLimit = config.timeLimit || 60
     this.folder = config.folder || 'media/'
     this.categoryType = config.type || 'video'
@@ -70,9 +71,9 @@ const RTSPRecorder = class {
       args.push(item)
     })
     args.push(fileName)
-    return childProcess.spawn('ffmpeg',
+    return childProcess.spawn(this.ffmpegRunner || 'ffmpeg',
       args,
-      { detached: false, stdio: 'ignore' })
+      { detached: false , stdio: 'ignore' })
   }
 
   stopRecording() {
